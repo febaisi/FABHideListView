@@ -98,28 +98,28 @@ public class MainActivity extends AppCompatActivity {
                     getResources().getStringArray(R.array.countries));
             list.setAdapter(listAdapter);
 
-            FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-            fab.attachToListView(list, new ScrollDirectionListener() {
-                @Override
-                public void onScrollDown() {
-                    Log.d("ListViewFragment", "onScrollDown()");
-                }
-
-                @Override
-                public void onScrollUp() {
-                    Log.d("ListViewFragment", "onScrollUp()");
-                }
-            }, new AbsListView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(AbsListView view, int scrollState) {
-                    Log.d("ListViewFragment", "onScrollStateChanged()");
-                }
-
-                @Override
-                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    Log.d("ListViewFragment", "onScroll()");
-                }
-            });
+//            FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
+//            fab.attachToListView(list, new ScrollDirectionListener() {
+//                @Override
+//                public void onScrollDown() {
+//                    Log.d("ListViewFragment", "onScrollDown()");
+//                }
+//
+//                @Override
+//                public void onScrollUp() {
+//                    Log.d("ListViewFragment", "onScrollUp()");
+//                }
+//            }, new AbsListView.OnScrollListener() {
+//                @Override
+//                public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                    Log.d("ListViewFragment", "onScrollStateChanged()");
+//                }
+//
+//                @Override
+//                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//                    Log.d("ListViewFragment", "onScroll()");
+//                }
+//            });
 
             return root;
         }
