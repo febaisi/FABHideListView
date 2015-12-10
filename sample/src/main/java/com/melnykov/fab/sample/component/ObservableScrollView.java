@@ -1,4 +1,4 @@
-package com.melnykov.fab;
+package com.melnykov.fab.sample.component;
 
 
 import android.content.Context;

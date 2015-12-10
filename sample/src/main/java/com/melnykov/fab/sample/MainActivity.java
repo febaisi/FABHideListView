@@ -24,9 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.melnykov.fab.FloatingActionButton;
-import com.melnykov.fab.ObservableScrollView;
-import com.melnykov.fab.ScrollDirectionListener;
 
 public class MainActivity extends AppCompatActivity {
 
