@@ -12,7 +12,7 @@ In my project I cleaned up all library and composed components dependences repla
 
 
 
-*In my example it was implemented only for ListView
+*In my example it was implemented only for ListView <br/>
 ![Demo](art/demo.gif)
 
 ### Demo
