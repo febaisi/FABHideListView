@@ -8,12 +8,18 @@ import android.support.annotation.DimenRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.AbsListView;
 import android.widget.ImageButton;
+
+import com.melnykov.fab.sample.R;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -21,8 +27,8 @@ import java.lang.annotation.RetentionPolicy;
 public class CustomFloatingActionButton extends android.support.design.widget.FloatingActionButton {
     private static final int TRANSLATE_DURATION_MILLIS = 200;
 
-    public CustomFloatingActionButton(Context context) {
-        super(context);
+    public CustomFloatingActionButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
 
@@ -34,27 +40,10 @@ public class CustomFloatingActionButton extends android.support.design.widget.Fl
     public static final int TYPE_NORMAL = 0;
     public static final int TYPE_MINI = 1;
 
-    private boolean mVisible;
-
-    private int mColorNormal;
-    private int mColorPressed;
-    private int mColorRipple;
-    private int mColorDisabled;
-    private boolean mShadow;
-    private int mType;
-
-    private int mShadowSize;
-
-    private int mScrollThreshold;
-
-    private boolean mMarginsSet;
+    private boolean mVisible = true;
 
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
-
-    private int getDimension(@DimenRes int id) {
-        return getResources().getDimensionPixelSize(id);
-    }
 
     private int getMarginBottom() {
         int marginBottom = 0;
@@ -74,10 +63,12 @@ public class CustomFloatingActionButton extends android.support.design.widget.Fl
     }
 
     public void show(boolean animate) {
+        Log.d("febaisi", "show fab!");
         toggle(true, animate, false);
     }
 
     public void hide(boolean animate) {
+        Log.d("febaisi", "hide fab!");
         toggle(false, animate, false);
     }
 
@@ -85,28 +76,22 @@ public class CustomFloatingActionButton extends android.support.design.widget.Fl
         if (mVisible != visible || force) {
             mVisible = visible;
             int height = getHeight();
-            if (height == 0 && !force) {
-                ViewTreeObserver vto = getViewTreeObserver();
-                if (vto.isAlive()) {
-                    vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                        @Override
-                        public boolean onPreDraw() {
-                            ViewTreeObserver currentVto = getViewTreeObserver();
-                            if (currentVto.isAlive()) {
-                                currentVto.removeOnPreDrawListener(this);
-                            }
-                            toggle(visible, animate, true);
-                            return true;
-                        }
-                    });
-                    return;
-                }
-            }
+
+            Log.d("febaisi", " visible=" + visible  +  "  -- height=Margin=" + (height + getMarginBottom()));
             int translationY = visible ? 0 : height + getMarginBottom();
+            boolean show = visible ? true : false;
             if (animate) {
-//                ViewPropertyAnimator.animate(this).setInterpolator(mInterpolator)
-//                        .setDuration(TRANSLATE_DURATION_MILLIS)
-//                        .translationY(translationY);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+                    animate().setInterpolator(mInterpolator)
+                            .setDuration(TRANSLATE_DURATION_MILLIS)
+                            .translationY(translationY);
+                } else {
+                    if (show) {
+                        setVisibility(View.VISIBLE);
+                    } else {
+                        setVisibility(View.INVISIBLE);
+                    }
+                }
             } else {
                 //ViewHelper.setTranslationY(this, translationY);
             }
@@ -125,7 +110,7 @@ public class CustomFloatingActionButton extends android.support.design.widget.Fl
         scrollDetector.setScrollDirectionListener(scrollDirectionListener);
         scrollDetector.setOnScrollListener(onScrollListener);
         scrollDetector.setListView(listView);
-        scrollDetector.setScrollThreshold(mScrollThreshold);
+        scrollDetector.setScrollThreshold(getResources().getDimensionPixelOffset(R.dimen.fab_scroll_threshold));
         listView.setOnScrollListener(scrollDetector);
     }
 
@@ -141,19 +126,6 @@ public class CustomFloatingActionButton extends android.support.design.widget.Fl
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
-    private static int darkenColor(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        hsv[2] *= 0.9f;
-        return Color.HSVToColor(hsv);
-    }
-
-    private static int lightenColor(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        hsv[2] *= 1.1f;
-        return Color.HSVToColor(hsv);
-    }
 
     private class AbsListViewScrollDetectorImpl extends AbsListViewScrollDetector {
         private ScrollDirectionListener mScrollDirectionListener;
