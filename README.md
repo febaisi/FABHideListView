@@ -13,7 +13,7 @@ In my project I cleaned up all library and composed components dependences repla
 
 
 *In my example it was implemented only for ListView <br/>
-![Demo](art/demo.gif)
+![Demo](http://cdn.makeagif.com/media/12-11-2015/WGVL4E.gif)
 
 ### Demo
 
