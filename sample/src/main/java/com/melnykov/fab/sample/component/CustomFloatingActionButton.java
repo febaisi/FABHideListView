@@ -86,14 +86,10 @@ public class CustomFloatingActionButton extends android.support.design.widget.Fl
                             .setDuration(TRANSLATE_DURATION_MILLIS)
                             .translationY(translationY);
                 } else {
-                    if (show) {
-                        setVisibility(View.VISIBLE);
-                    } else {
-                        setVisibility(View.INVISIBLE);
-                    }
+                    setCustomVisibility(show);
                 }
             } else {
-                //ViewHelper.setTranslationY(this, translationY);
+                setCustomVisibility(show);setCustomVisibility(show);
             }
 
             // On pre-Honeycomb a translated view is still clickable, so we need to disable clicks manually
@@ -102,6 +98,15 @@ public class CustomFloatingActionButton extends android.support.design.widget.Fl
             }
         }
     }
+
+    private void setCustomVisibility(boolean show) {
+        if (show) {
+            setVisibility(View.VISIBLE);
+        } else {
+            setVisibility(View.INVISIBLE);
+        }
+    }
+
 
     public void attachToListView(@NonNull AbsListView listView,
                                  ScrollDirectionListener scrollDirectionListener,
@@ -112,14 +117,6 @@ public class CustomFloatingActionButton extends android.support.design.widget.Fl
         scrollDetector.setListView(listView);
         scrollDetector.setScrollThreshold(getResources().getDimensionPixelOffset(R.dimen.fab_scroll_threshold));
         listView.setOnScrollListener(scrollDetector);
-    }
-
-    private boolean hasLollipopApi() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-    }
-
-    private boolean hasJellyBeanApi() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
     }
 
     private boolean hasHoneycombApi() {
