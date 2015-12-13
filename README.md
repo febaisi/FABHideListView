@@ -7,7 +7,7 @@ Initial project was made by makovkastar
 
 ### Description
 
-In initial project developed by makovkastar, this project intend to hide a custom FAB when scrollview, recyclerview or listview scroll down.
+In initial project developed by makovkastar, this app intend to hide a custom FAB when scrollview, recyclerview or listview scroll down.
 In my project I cleaned up all library and composed components dependences replacing custom FAB (imageview) to official google FAB component from Material Design Library (android.support.design.widget.FloatingActionButton). 
 
 
